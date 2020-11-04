@@ -107,8 +107,8 @@ class TestBase:
             print("end")
             return
 
-    def save_screen(self):
-        self.driver.get_screenshot_as_file(self.save_path)
+    # def save_screen(self):
+    #     self.driver.get_screenshot_as_file(self.save_path)
 
     def test_login(self):
         login_name = self.driver.find_element_by_name(self.user_name)
