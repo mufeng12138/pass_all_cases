@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 import yaml
+from main import *
 import pytest
 import os
 import sys
@@ -10,50 +11,15 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 
+
 # os.environ['http_proxy'] = 'http://127.0.0.1:1080'
 # os.environ['https_proxy'] = 'https://127.0.0.1:1080'
 
-# max_case = "C94"
-#
-# base_url = r"http://10.215.142.114/LightTower/login"
-# user_name = "userBase.userName"
-# user_passwd = "userBase.password"
-# name = "zhang_s"
-# passwd = "zhang_s@ecidi"
-# loc_submit = "submit_button"
-#
-# home_id = "fw-header"
-# task_id = "MENU_MYPJ"
-#
-# loc_pro_name = "projectInformation.projectName"
-# loc_search_proname_id = "pjt_search"
-#
-# loc_case_id = "t1"
-# loc_case_no_id = "testcaseCode"
-#
-# loc_btn_id = "testcase_btn"
-# loc_execute_class = "execute"
-#
-# loc_popup_title_id = "popup_title"
-# loc_popup_ok_id = "popup_ok"
-#
-# project_name = "测试数据"
-# version_name = "0722"
-#
-#
-# save_path = r"E:\python_space\pass_all_cases\pic"
-#
-# quiet = True
-# # quiet = False
-# wait_timeout = 5
-#
-# N = 100
-
-
-class TestBase:
+# 对象库层
+class BasePage:
     def __init__(self):
-        src = open("test_yaml/src.yaml", mode="r", encoding="utf-8")
-        data = yaml.load(src)
+        # src = open("test_yaml/src.yaml", mode="r", encoding="utf-8")
+        # data = yaml.load(src)
         # self.project_name = input("请输入项目名称，以回车结束：")
         self.project_name = project_name
         self.loc_pro_name = loc_pro_name
@@ -172,7 +138,7 @@ class TestBase:
             except NoSuchElementException:
                 print("共计" + str(i) + "条通过")
                 return
-            self.web_screen_shoot(str(i+1))
+            self.web_screen_shoot(str(i + 1))
             i += 1
             try:
                 self.driver.find_element_by_id(self.loc_popup_ok_id).click()
