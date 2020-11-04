@@ -1,0 +1,1 @@
+支持100条以内用例通过，需配置最大用例号max_case、版本名version_name、项目名project_name、员工账密name，passwd、截图文件夹地址save_path
