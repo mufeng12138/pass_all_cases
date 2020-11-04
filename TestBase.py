@@ -1,3 +1,4 @@
+import os
 from selenium import webdriver
 # import pytest
 import time
@@ -7,6 +8,9 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
+
+os.environ['http_proxy'] = 'http://127.0.0.1:1080'
+os.environ['https_proxy'] = 'https://127.0.0.1:1080'
 
 base_url = r"http://10.215.142.114/LightTower/login"
 user_name = "userBase.userName"
@@ -37,7 +41,7 @@ max_case = "C86"
 save_path = r"E:\python_space\pass_all_cases\pic"
 
 quiet = True
-# quiet = False
+quiet = False
 wait_timeout = 5
 
 N = 100
@@ -79,17 +83,19 @@ class TestBase:
         self.task_id = task_id
         self.save_path = save_path
 
-    def web_screen_shoot(self, t=wait_timeout):
-        # time.sleep(t)
-        picture_time = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
-        self.driver.get_screenshot_as_file(self.save_path + '\\' + picture_time + '.png')
+    def web_screen_shoot(self, reason="default"):
+        picture_time = time.strftime("%Y-%m-%d_%H%M%S", time.localtime(time.time()))
+        self.driver.get_screenshot_as_file(self.save_path + '\\' + picture_time + "_" + reason + '.png')
+        print(picture_time+reason)
 
     def until_wait(self, timeout, mode, content):
         try:
             # self.driver.find_element(*(eval('By.' + mode), content))
-            WebDriverWait(driver=self.driver, timeout=10).until(self.driver.find_element(By.ID, 'loginFrm'))
-                # until(self.driver.find_element(By.ID, content))
-                # until(self.driver.find_element(*(eval('By.' + mode), content)))
+            WebDriverWait(self.driver, 10). \
+                until_not(lambda x: x.find_element(By.ID, 'loginFrm'))
+            # until(self.driver.find_element(By.ID, content))
+            # until(self.driver.find_element(By.ID, 'loginFrm'))
+            # until(self.driver.find_element(*(eval('By.' + mode), content)))
         finally:
             print("end")
             self.driver.quit()
@@ -122,17 +128,21 @@ class TestBase:
         login_passwd.clear()
         login_name.send_keys(self.name)
         login_passwd.send_keys(self.passwd)
+        # self.web_screen_shoot()
         self.driver.find_element_by_id(loc_submit).click()
         # self.driver.get_screenshot_as_png()
-        # self.until_wait(10, 'ID', self.home_id)
-        # self.until_wait(100, 'ID', 'loginFrm')
-        a = self.driver.find_element(By.ID, 'loginFrm')
-        print(a)
-        time.sleep(3)
-        self.web_screen_shoot()
 
-        flag = self.driver.find_element_by_id(self.home_id)
-        return flag
+        # self.until_wait(10, 'ID', self.home_id)
+        WebDriverWait(self.driver, 10).until_not(lambda x: x.find_element(By.ID, 'loginFrm'))
+
+        # self.until_wait(100, 'ID', 'loginFrm')
+        # self.driver.find_element(By.ID, 'loginFrm')
+        # print(a)
+        # time.sleep(3)
+        self.web_screen_shoot("确定进入系统")
+
+        # self.driver.find_element_by_id(self.home_id)
+        # return flag
 
         # login_submit = self.driver.find_element_by_id(loc_submit).click()
         # print("login_submit =", login_submit)
@@ -140,8 +150,7 @@ class TestBase:
     # 定位到我的任务
     def test_loc_task(self):
         self.driver.find_element_by_id(self.task_id).click()
-
-        self.web_screen_shoot()
+        self.web_screen_shoot("点击我的任务")
 
     # 在我的任务中定位项目
     def test_loc_project(self):
@@ -165,21 +174,21 @@ class TestBase:
     def test_loc_case(self):
         self.driver.find_element_by_id(self.loc_case_id).click()
         # wait_sleep(3)
-        self.web_screen_shoot()
+        self.web_screen_shoot("点击我的用例")
         # 输入目标用例
         input_case_no = self.driver.find_element_by_id(self.loc_case_no_id)
         input_case_no.send_keys(self.max_case)
-        self.web_screen_shoot()
+        self.web_screen_shoot("输入最大用例并点回车")
         input_case_no.send_keys(Keys.ENTER)
         self.driver.find_element_by_id(self.loc_btn_id).click()
-        self.web_screen_shoot()
+        self.web_screen_shoot("点击查询")
         # wait_sleep(3)
         # 第一条可执行用例
         # self.driver.find_element_by_class_name(self.loc_execute_class).click()
         # 第一条用例
         self.driver.find_element_by_xpath('//*[@id="1"]/td[17]/a[2]').click()
         # wait_sleep(3)
-        self.web_screen_shoot()
+        self.web_screen_shoot("点击第一条用例执行")
 
     # 执行用例
     def test_execute(self):
