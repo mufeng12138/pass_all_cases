@@ -1,19 +1,35 @@
 from selenium import webdriver
 import time
-import yaml
 from main import *
-import pytest
-import os
-import sys
 
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.wait import WebDriverWait
 
-
 # os.environ['http_proxy'] = 'http://127.0.0.1:1080'
 # os.environ['https_proxy'] = 'https://127.0.0.1:1080'
+
+
+user_name = "userBase.userName"
+user_passwd = "userBase.password"
+loc_submit = "submit_button"
+
+home_id = "fw-header"
+task_id = "MENU_MYPJ"
+
+loc_pro_name = "projectInformation.projectName"
+loc_search_proname_id = "pjt_search"
+
+loc_case_id = "t1"
+loc_case_no_id = "testcaseCode"
+
+loc_btn_id = "testcase_btn"
+loc_execute_class = "execute"
+
+loc_popup_title_id = "popup_title"
+loc_popup_ok_id = "popup_ok"
+
 
 # 对象库层
 class BasePage:

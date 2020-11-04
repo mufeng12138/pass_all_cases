@@ -7,26 +7,8 @@ from BasePage import *
 max_case = "C97"
 
 base_url = r"http://10.215.142.114/LightTower/login"
-user_name = "userBase.userName"
-user_passwd = "userBase.password"
 name = "zhang_s"
 passwd = "zhang_s@ecidi"
-loc_submit = "submit_button"
-
-home_id = "fw-header"
-task_id = "MENU_MYPJ"
-
-loc_pro_name = "projectInformation.projectName"
-loc_search_proname_id = "pjt_search"
-
-loc_case_id = "t1"
-loc_case_no_id = "testcaseCode"
-
-loc_btn_id = "testcase_btn"
-loc_execute_class = "execute"
-
-loc_popup_title_id = "popup_title"
-loc_popup_ok_id = "popup_ok"
 
 project_name = "测试数据"
 version_name = "0722"
