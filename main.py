@@ -1,36 +1,22 @@
 # max_case = "C96"
-import os
+
 from BasePage import *
 
 
-# 数据层
-max_case = "C97"
-
-base_url = r"http://10.215.142.114/LightTower/login"
-name = "zhang_s"
-passwd = "zhang_s@ecidi"
-
-project_name = "测试数据"
-version_name = "0722"
-
-# save_path = r"E:\python_space\pass_all_po\pic"
-save_path = os.getcwd()+r"\pic"
-
-quiet = True
-# quiet = False
-wait_timeout = 5
-
-N = 100
-
-
 # 逻辑层
+
 def test_run():
     mf = BasePage()
+    # 登录
     mf.test_login()
+    # 找到我的任务
     mf.test_loc_task()
+    # 找到项目
     mf.test_loc_project()
+    # 找到用例
     mf.test_loc_case()
-    mf.test_execute()
+    # 执行用例
+    # mf.test_execute()
 
 
 if __name__ == '__main__':
